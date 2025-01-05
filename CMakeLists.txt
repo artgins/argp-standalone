@@ -3,7 +3,7 @@
 # argp-standalone: standalone version of glibc's argp functions.
 
 cmake_minimum_required(VERSION 3.17.3)
-project(argp-standalone VERSION 1.0.0 LANGUAGES C)
+project(argp-standalone VERSION 1.1.0 LANGUAGES C)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(IS_MAIN_PROJECT TRUE)
@@ -16,6 +16,17 @@ if(IS_MAIN_PROJECT)
   include(CTest)
 endif()
 
+#-----------------------------------------------------#
+#   Get yunetas base path:
+#   - defined in environment variable YUNETAS_BASE
+#   - else default "/yuneta/development/yunetas"
+#-----------------------------------------------------#
+if(DEFINED ENV{YUNETAS_BASE})
+  set(YUNETAS_BASE_DIR $ENV{YUNETAS_BASE})
+else()
+  set(YUNETAS_BASE_DIR "/yuneta/development/yunetas")
+endif()
+include("${YUNETAS_BASE_DIR}/tools/cmake/project.cmake")
 
 ################################################################################
 # config.h
@@ -82,7 +93,6 @@ configure_file(config.h.in config.h)
 ################################################################################
 # Global OS specific options
 ################################################################################
-
 if(WIN32)
   add_compile_definitions(
     _CRT_DECLARE_GLOBAL_VARIABLES_DIRECTLY
@@ -94,7 +104,6 @@ endif()
 ################################################################################
 # Global compiler specific options
 ################################################################################
-
 if(MSVC)
   add_compile_options(/W3)
   if(NOT IS_MAIN_PROJECT)
@@ -107,12 +116,54 @@ else()
 endif()
 
 
+##############################################
+#   Source
+##############################################
+set(
+    HDRS
+    include/argp-standalone/argp-standalone.h
+)
+
+set(
+    SRCS
+    src/argp-ba.c
+    src/argp-compat.c
+    src/argp-eexst.c
+    src/argp-fmtstream.c
+    src/argp-fs-xinl.c
+    src/argp-help.c
+    src/argp-parse.c
+    src/argp-pv.c
+    src/argp-pvh.c
+    src/argp-xinl.c
+    src/getopt.c
+    src/getopt1.c
+)
+
+##############################################
+#   Lib
+##############################################
+add_library(${PROJECT_NAME} ${SRCS} ${HDRS})
+
+target_link_options(${PROJECT_NAME} PUBLIC LINKER:-Map=${PROJECT_NAME}.map)
+
 ################################################################################
 # Subdirectories
 ################################################################################
-
-add_subdirectory(src)
-
 if((IS_MAIN_PROJECT OR argp-standalone_BUILD_TESTING) AND BUILD_TESTING)
   add_subdirectory(test)
 endif()
+
+##############################################
+#   System install
+##############################################
+install(FILES ${HDRS} DESTINATION ${INC_DEST_DIR})
+
+install(
+    TARGETS ${PROJECT_NAME}
+    PERMISSIONS
+    OWNER_READ OWNER_WRITE
+    GROUP_READ GROUP_WRITE
+    WORLD_READ
+    DESTINATION ${LIB_DEST_DIR}
+)
