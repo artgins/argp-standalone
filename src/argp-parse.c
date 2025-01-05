@@ -47,6 +47,7 @@ char *alloca ();
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #if defined(HAVE_UNISTD_H) && HAVE_UNISTD_H
 # include <unistd.h>
@@ -112,12 +113,12 @@ static volatile int _argp_hang;
 static const struct argp_option argp_default_options[] =
 {
   {"help",	  '?',	  	0, 0,  N_("Give this help list"), -1},
-  {"usage",	  OPT_USAGE,	0, 0,  N_("Give a short usage message")},
+  {"usage",	  OPT_USAGE,	0, 0,  N_("Give a short usage message"), 0},
   {"program-name",OPT_PROGNAME, N_("NAME"), OPTION_HIDDEN,
-   N_("Set the program name")},
+   N_("Set the program name"), 0},
   {"HANG",	  OPT_HANG,    N_("SECS"), OPTION_ARG_OPTIONAL | OPTION_HIDDEN,
-   N_("Hang for SECS seconds (default 3600)")},
-  {0, 0}
+   N_("Hang for SECS seconds (default 3600)"), 0},
+  {0, 0, 0, 0, 0, 0}
 };
 
 static error_t
@@ -178,7 +179,7 @@ static const struct argp argp_default_argp =
 static const struct argp_option argp_version_options[] =
 {
   {"version",	  'V',	  	0, 0,  N_("Print program version"), -1},
-  {0, 0}
+  {0, 0, 0, 0, 0, 0}
 };
 
 static error_t
