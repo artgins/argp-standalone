@@ -3,7 +3,7 @@
 # argp-standalone: standalone version of glibc's argp functions.
 
 cmake_minimum_required(VERSION 3.17.3)
-project(argp-standalone VERSION 1.1.2 LANGUAGES C)
+project(argp-standalone VERSION 1.1.3 LANGUAGES C)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(IS_MAIN_PROJECT TRUE)
@@ -26,7 +26,18 @@ if(DEFINED ENV{YUNETAS_BASE})
 else()
   set(YUNETAS_BASE_DIR "/yuneta/development/yunetas")
 endif()
-include("${YUNETAS_BASE_DIR}/tools/cmake/project.cmake")
+
+#--------------------------------------------------#
+#   Get the parent of YUNETAS_BASE
+#   where the project code can be
+#   and where the output of yunetas is installed
+#--------------------------------------------------#
+get_filename_component(YUNETAS_PARENT_BASE_DIR "${YUNETAS_BASE_DIR}" DIRECTORY)
+set(CMAKE_INSTALL_PREFIX "${YUNETAS_PARENT_BASE_DIR}/outputs_ext")
+
+set(INC_DEST_DIR ${CMAKE_INSTALL_PREFIX}/include)
+set(LIB_DEST_DIR ${CMAKE_INSTALL_PREFIX}/lib)
+set(BIN_DEST_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 
 ################################################################################
 # config.h
