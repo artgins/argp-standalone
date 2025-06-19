@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <argp.h>
+#include <argp-standalone.h>
 
 /*
  * Implementation of random() for systems that don't have it.

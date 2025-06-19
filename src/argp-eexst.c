@@ -28,7 +28,7 @@
 # include <stdlib.h>
 #endif
 
-#include "argp.h"
+#include "argp-standalone.h"
 
 /* The exit status that argp will use when exiting due to a parsing error.
    If not defined or set by the user program, this defaults to EX_USAGE from

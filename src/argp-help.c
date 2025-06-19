@@ -83,7 +83,7 @@ char *strerror (int errnum);
 # endif
 #endif
 
-#include "argp.h"
+#include "argp-standalone.h"
 #include "argp-fmtstream.h"
 #include "argp-namefrob.h"
 

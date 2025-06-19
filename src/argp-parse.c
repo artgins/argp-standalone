@@ -75,7 +75,7 @@ char *alloca ();
 # define N_(msgid) (msgid)
 #endif
 
-#include "argp.h"
+#include "argp-standalone.h"
 #include "argp-namefrob.h"
 #include "argp-compat.h"
 

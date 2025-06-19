@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include "argp.h"
+#include "argp-standalone.h"
 
 /* If set by the user program to a non-zero value, then a default option
    --version is added (unless the ARGP_NO_HELP flag is used), which calls

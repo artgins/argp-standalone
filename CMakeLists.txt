@@ -27,6 +27,8 @@ else()
   set(YUNETAS_BASE_DIR "/yuneta/development/yunetas")
 endif()
 
+include_directories("include/argp-standalone")
+
 #--------------------------------------------------#
 #   Get the parent of YUNETAS_BASE
 #   where the project code can be
